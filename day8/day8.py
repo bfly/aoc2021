@@ -1,78 +1,71 @@
-fn = 'input.txt'
-# https://github.com/DecemberDream/advent-of-code
+
+def format_vals(input_val):
+    return list(map(lambda w: ''.join(sorted(w)), input_val))
 
 
-def part1(lines):
-    res1 = 0
-    for line in lines:
-        _, right = line.split('|')
-        y = right.split(' ')
-
-        for num in y:
-            if len(num) in {2, 3, 4, 7}:
-                res1 += 1
-    print(f'{res1=}')
+def part1(inputs):
+    ans = sum(
+        len(chars) in (2, 3, 4, 7)
+        for line in inputs
+        for chars in line.split('|')[1].strip().split()
+    )
+    print(f'Part 1: The digits 1, 4, 7, or 8 appear {ans}')
 
 
-def part2(lines):
-    left = []
-    right = []
+def part2(inputs):
+    outputs = list(map(format_vals, [input_val.split('|')[1].strip().split() for input_val in inputs]))
+    inputs = list(map(format_vals, [input_val.split('|')[0].strip().split() for input_val in inputs]))
 
-    for line in lines:
-        split_line = line.split("|")
-        left.append(["".join(sorted(c)) for c in split_line[0].split()])
-        right.append(["".join(sorted(c)) for c in split_line[1].split()])
+    code = []
+    mapping = {2: 1, 3: 7, 4: 4, 7: 8}
+    for input_val in inputs:
+        temp = {}
+        for word in input_val:
+            if len(word) in mapping:
+                temp[mapping[len(word)]] = word
 
-    res2 = 0
+        # Find 6
+        for word in input_val:
+            if len(word) == 6 and any(char not in word for char in temp[1]):
+                temp[6] = word
+                break
+        # Find 0
+        for word in input_val:
+            if len(word) == 6 and any(char not in word for char in temp[4]) and word not in temp.values():
+                temp[0] = word
+                break
 
-    for i in range(len(left)):
-        digits = {}
+        # Find 9 after 6 and 0 with length 6
+        for word in input_val:
+            if len(word) == 6 and word not in temp.values():
+                temp[9] = word
+                break
+        # Find 5
+        for word in input_val:
+            if len(word) == 5 and all(char in temp[6] for char in word):
+                temp[5] = word
+                break
 
-        while len(digits) < 10:
-            for digit in left[i]:
-                # trivial cases
-                if len(digit) == 2 and 1 not in digits:
-                    digits[1] = digit
-                    continue
-                if len(digit) == 3 and 7 not in digits:
-                    digits[7] = digit
-                    continue
-                if len(digit) == 4 and 4 not in digits:
-                    digits[4] = digit
-                    continue
-                if len(digit) == 7 and 8 not in digits:
-                    digits[8] = digit
-                    continue
+        # Find 3
+        for word in input_val:
+            if len(word) == 5 and all(char in temp[9] for char in word) and word not in temp.values():
+                temp[3] = word
+                break
 
-                # either 2 or 5 or 3
-                if len(digit) == 5:
-                    if 7 in digits and all([i in list(digit) for i in list(digits.get(7))]):
-                        digits[3] = digit
-                    elif 9 in digits and all([i in list(digits.get(9)) for i in list(digit)]):
-                        digits[5] = digit
-                    elif 9 in digits:
-                        digits[2] = digit
+        # Find 2 after 3 and 5 with length 5
+        for word in input_val:
+            if len(word) == 5 and word not in temp.values():
+                temp[2] = word
 
-                # either 0 or 6 or 9
-                if len(digit) == 6:
-                    if 3 in digits and all([i in list(digit) for i in list(digits.get(3))]):
-                        digits[9] = digit
-                    elif 5 in digits and sum([i in list(digits.get(5)) for i in list(digit)]) == 5:
-                        digits[6] = digit
-                    elif 5 in digits and sum([i in list(digits.get(5)) for i in list(digit)]) == 4:
-                        digits[0] = digit
-
-        out_num_1 = []
-
-        for out_pos in range(4):
-            out_num_1.append([k for k, v in digits.items() if v == right[i][out_pos]][0])
-
-        res2 += int("".join([str(c) for c in out_num_1]))
-    print(f'{res2=}')
+        # Transform key-value to value-key
+        code.append({v: k for k, v in temp.items()})
+    total = 0
+    for i, output in enumerate(outputs):
+        total += int(''.join(map(str, [code[i][word] for word in output])))
+    print(f'Part 2: Sum of the output values is {total}')
 
 
 if __name__ == '__main__':
-    with open(fn, 'r') as f:
-        data = f.read().splitlines()
-        part1(data)
-        part2(data)
+    input_vals = open('input.txt').readlines()
+    part1(input_vals)
+    part2(input_vals)
