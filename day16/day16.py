@@ -48,10 +48,13 @@ def parse_operator(bits, type_id):
 
 
 def parse_packet(bits, res, single=False):
+    global version_sum
     if bits.count("0") == len(bits):
         return res, ""
+    version = int(bits[:3], 2)
     type_id = bits[3:6]
     bits = bits[6:]
+    version_sum += version
     if type_id == "100":
         res_n, bits = parse_literal(bits)
     else:
@@ -62,5 +65,12 @@ def parse_packet(bits, res, single=False):
     return parse_packet(bits, res)
 
 
+# part1(f)
+version_sum = 0
+# while binary:
+#     binary = parse_packet(binary, list())[0]
+#
+
 res = parse_packet(binary, list())[0]
+print(f'{version_sum=}')
 print('Expression:', int(res[0], 2))
