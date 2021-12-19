@@ -1,18 +1,9 @@
 # aoc2021
 
-<<<<<<<
-## Setup
-=======
 ![](https://img.shields.io/badge/day%20📅-19-blue)
 ![](https://img.shields.io/badge/stars%20⭐-38-yellow)
 ### PROGRESS
->>>>>>>
 
-<<<<<<<
-Run `make day=<day_number>` e.g `make day=25`
-
-##### Credit to Jack Pennington (jackcpennington) for project and daily make process.
-=======
 | Day |                                Name                                 | Solution | Stars Earned  |
 |:---:|:-------------------------------------------------------------------:|:--------:|:-------------:|
 | 01  |         [Sonar Sweep](https://adventofcode.com/2021/day/1)          | [01](01) |      ★★       |
