@@ -1,7 +1,7 @@
 # aoc2021
 
-![](https://img.shields.io/badge/day%20📅-22-blue)
-![](https://img.shields.io/badge/stars%20⭐-44-yellow)
+![](https://img.shields.io/badge/day%20📅-23-blue)
+![](https://img.shields.io/badge/stars%20⭐-46-yellow)
 ### PROGRESS
 
 | Day |                              Name                               | Solution | Stars Earned |
@@ -28,7 +28,7 @@
 | 20  |       [Trench Map](https://adventofcode.com/2021/day/20)        | [20](20) |      ★★      |
 | 21  |       [Dirac Dice](https://adventofcode.com/2021/day/21)        | [21](21) |      ★★      |
 | 22  |     [Reactor Reboot](https://adventofcode.com/2021/day/22)      | [22](22) |      ★★      |
-| 23  |                                                                 |          |      ☆☆      |
+| 23  |        [Amphipod](https://adventofcode.com/2021/day/23)         | [23](23) |      ★★      |
 | 24  |                                                                 |          |      ☆☆      |
 | 25  |                                                                 |          |      ☆☆      |
 >>>>>>>
